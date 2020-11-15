@@ -6,6 +6,9 @@
 #include "RandomShapesGenerator.h"
 #include <algorithm>
 #include <iostream>
+#include "BaseShapeVisitor.h"
+#include "TestShapeVisitor.h"
+#include <memory>
 
 template<typename Base, typename T>
 inline bool instanceof(const T* ptr) {
@@ -22,6 +25,14 @@ double calculateCirclesArea(const std::vector<Shape*>* shapes) {
 	return result;
 }
 
+void testShapeVisitor() {
+	std::unique_ptr<MyBaseShapeVisitor> visitor(new TestShapeVisitor());
+	std::unique_ptr<Circle> circle(new Circle);
+	std::unique_ptr<Ellipse> ellipse(new Ellipse);
+	visitor->visitCircle(*circle);
+	visitor->visitEllipse(*ellipse);
+}	
+
 int main() {
 
 	RandomShapesGenerator generator = RandomShapesGenerator();
@@ -32,6 +43,8 @@ int main() {
 		});
 
 	std::cout << "Circle area = " << calculateCirclesArea(shapes);
+
+	testShapeVisitor();
 	
 	return 0;
 }

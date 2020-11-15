@@ -2,6 +2,7 @@
 #include "Shape.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include "BaseShapeVisitor.h"
 
 class Circle : public Shape {
 
@@ -21,6 +22,10 @@ public:
 
 	virtual double calculateArea() override {
 		return M_PI * pow(radius, 2);
+	}
+
+	void acceptVisitor(MyBaseShapeVisitor* visitor) {
+		visitor->visitCircle(*this);
 	}
 		 
 private:
